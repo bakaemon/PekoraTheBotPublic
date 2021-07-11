@@ -107,7 +107,7 @@ class Fun(commands.Cog, name="fun"):
                                f" requested me to {act} you, " + member_object.mention + ", peko.")
                 await ctx.send(url_image)
             else:
-                await ctx.send(f"The user may not be online or even existed. Take this {act} instead, peko.")
+                await ctx.message.reply(f"The user may not be online or even existed. Take this {act} instead, peko.")
                 await ctx.send(url_image)
         elif replied_reference(ctx):
             ref_msg = await ctx.fetch_message(replied_reference(ctx).message_id)
