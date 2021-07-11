@@ -99,7 +99,7 @@ class Fun(commands.Cog, name="fun"):
             if member_id == ctx.message.author.id:
                 return await ctx.send(pekofy("Why are you hurting yourself?"))
             elif member_id == self.bot.user.id:
-                await ctx.send("Oi! Why would you, peko!? *hit " + ctx.message.author.mention + "*")
+                await ctx.send(f"Oi! Why would you, peko!? *{act} " + ctx.message.author.mention + "*")
                 return await ctx.send(url_image)
             member_object = ctx.message.guild.get_member(member_id)
             await ctx.send(ctx.message.author.mention +
@@ -109,7 +109,7 @@ class Fun(commands.Cog, name="fun"):
             ref_msg = await ctx.fetch_message(replied_reference(ctx).message_id)
             if ref_msg.author.id == ctx.message.author.id:
                 return await ctx.message.reply(pekofy("Why are you hurting yourself?"), mention_author=False)
-            await ctx.send("In behalf of " + ctx.message.author.name + ", take this peko!",
+            await ctx.send("In behalf of " + ctx.message.author.name + f", take this {act} peko!",
                            reference=replied_reference(ctx))
             await ctx.send(url_image)
         else:
