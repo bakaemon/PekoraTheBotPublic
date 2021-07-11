@@ -109,6 +109,8 @@ class Fun(commands.Cog, name="fun"):
             ref_msg = await ctx.fetch_message(replied_reference(ctx).message_id)
             if ref_msg.author.id == ctx.message.author.id:
                 return await ctx.message.reply(pekofy("Why are you hurting yourself?"), mention_author=False)
+            elif ref_msg.author.id == self.bot.user.id:
+                await ctx.message.reply(f"Oi! Why would you, peko!? *{act} back at you*")
             await ctx.send("In behalf of " + ctx.message.author.name + f", take this {act} peko!",
                            reference=replied_reference(ctx))
             await ctx.send(url_image)
