@@ -10,7 +10,6 @@ from helpers.extractstring import extract_string
 from helpers.replied_reference import replied_reference
 from discord.ext import commands
 
-import re
 
 if not os.path.isfile("config.json"):
     sys.exit("'config.json' not found! Please add it and try again.")
