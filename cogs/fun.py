@@ -26,10 +26,11 @@ class Fun(commands.Cog, name="fun"):
     async def laugh(self, ctx, *args):
         arguments = " ".join(list(args))
         message = ""
-        ref_msg = await ctx.fetch_message(replied_reference(ctx).message_id)
+        if replied_reference(ctx):
+            ref_msg = await ctx.fetch_message(replied_reference(ctx).message_id)
 
-        if ref_msg.author.id == ctx.message.author.id:
-            message += "*Pekora laughs at you*\n"
+            if ref_msg.author.id == ctx.message.author.id:
+                message += "*Pekora laughs at you*\n"
         if arguments == "smugly":
             message = message.replace('laughs', 'laughs smugly')
             message += "PE↗KO↘PE↗KO↘PE↗KO↘"
