@@ -102,9 +102,13 @@ class Fun(commands.Cog, name="fun"):
                 await ctx.send(f"Oi! Why would you, peko!? *{act} " + ctx.message.author.mention + "*")
                 return await ctx.send(url_image)
             member_object = ctx.message.guild.get_member(member_id)
-            await ctx.send(ctx.message.author.mention +
-                           f" requested me to {act} you, " + member_object.mention + ", peko.")
-            await ctx.send(url_image)
+            if member_object is not None:
+                await ctx.send(ctx.message.author.mention +
+                               f" requested me to {act} you, " + member_object.mention + ", peko.")
+                await ctx.send(url_image)
+            else:
+                await ctx.send(f"The user may not be online or even existed. Take this {act} instead, peko.")
+                await ctx.send(url_image)
         elif replied_reference(ctx):
             ref_msg = await ctx.fetch_message(replied_reference(ctx).message_id)
             if ref_msg.author.id == ctx.message.author.id:
