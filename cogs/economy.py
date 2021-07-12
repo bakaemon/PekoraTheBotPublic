@@ -51,7 +51,7 @@ class Economy(commands.Cog, name="economy"):
     async def withdraw(self, ctx, amount_str):
         amount = int(amount_str)
         user = begin(ctx)
-        if user.getBalance() <= amount:
+        if user.getBalance() < amount:
             message = f"You don't have enough {self.unit} in bank, peko."
         else:
             user.deleteBalance(amount)
@@ -68,7 +68,7 @@ class Economy(commands.Cog, name="economy"):
     async def deposit(self, ctx, amount_str):
         amount = int(amount_str)
         user = begin(ctx)
-        if user.getWallet() <= amount:
+        if user.getWallet() < amount:
             message = f"You don't have enough {self.unit} in wallet, peko."
         else:
             user.deleteMoney(amount)
