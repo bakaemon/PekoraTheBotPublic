@@ -31,6 +31,8 @@ class Fun(commands.Cog, name="fun"):
 
             if ref_msg.author.id == ctx.message.author.id:
                 message += "*Pekora laughs at you*\n"
+            elif ref_msg.author.id == self.bot.user.id:
+                message += "*Pekora laughs at herself, but ultimately smug at you*\n"
         if arguments == "smugly":
             message = message.replace('laughs', 'laughs smugly')
             message += "PE↗KO↘PE↗KO↘PE↗KO↘"
