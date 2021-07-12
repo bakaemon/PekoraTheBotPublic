@@ -7,6 +7,7 @@ import sys
 import discord
 from discord.ext import commands, tasks
 from discord.ext.commands import Bot
+from helpers.fomattingnumber import time_format
 
 if not os.path.isfile("config.json"):
     sys.exit("'config.json' not found! Please add it and try again.")

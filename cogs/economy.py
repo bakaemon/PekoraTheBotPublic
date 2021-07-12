@@ -13,6 +13,9 @@ else:
     with open("config.json") as file:
         config = json.load(file)
 
+with open("assets/ecoConfig.json") as file:
+    unit = json.load(file)['unit']
+
 
 def find(lst, key, value):
     for i, dic in enumerate(lst):
@@ -28,7 +31,7 @@ def begin(ctx):
 class Economy(commands.Cog, name="economy"):
     def __init__(self, bot):
         self.bot = bot
-        self.unit = "🥕"
+        self.unit = unit
 
     @commands.command(name="balance", aliases=['bal', 'wallet', 'money'],
                       help="Check your balance provided by Usaken Banking, peko.")
