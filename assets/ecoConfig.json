@@ -1,0 +1,17 @@
+{
+  "items": [
+    {
+      "name": "Shiny coin",
+      "description": "A good luck object for beginners.",
+      "amount": 1,
+      "price": 500
+    },
+    {
+      "name": "Crypto",
+      "description": "Each credit point has the value of 100 \uD83E\uDD55",
+      "amount": 1,
+      "price": 100
+    }
+  ]
+
+}
