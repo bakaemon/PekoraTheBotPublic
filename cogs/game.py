@@ -58,6 +58,9 @@ class Game(commands.Cog, name="game"):
         poll.append(correct)
         random.shuffle(poll)
 
+        def check(reaction_answer, userObj):
+            return userObj == member_object and str(reaction_answer.emoji) in emotes
+
         def generate_embed():
             embed_object = discord.Embed(title=f"{question_type.capitalize()} challenge time, peko!",
                                          description=f"Difficulty: **{difficulty}**, time: 30 seconds.")
@@ -73,9 +76,6 @@ class Game(commands.Cog, name="game"):
             emotes = [yes, no]
             for emote in emotes:
                 await msg.add_reaction(emote)
-
-            def check(reaction_answer, userObj):
-                return userObj == ctx.message.author and str(reaction_answer.emoji) in emotes
 
             try:
                 reactions, user_answer = await self.bot.wait_for('reaction_add', timeout=30.0, check=check)
@@ -104,9 +104,6 @@ class Game(commands.Cog, name="game"):
             emotes = ["🇦", "🇧", "🇨", "🇩"]
             for emote in emotes:
                 await msg.add_reaction(emote)
-
-            def check(reaction_answer, userObj):
-                return userObj == ctx.message.author and str(reaction_answer.emoji) in emotes
 
             try:
                 reactions, user_answer = await self.bot.wait_for('reaction_add', timeout=30.0, check=check)
