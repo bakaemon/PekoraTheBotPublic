@@ -26,7 +26,7 @@ class Game(commands.Cog, name="game"):
         self.bot = bot
 
     @commands.command(name="challenge", description="Challenge yourself or people with my quiz peko.")
-    @commands.cooldown(rate=1, per=180)
+    @commands.cooldown(rate=1, per=180, type=commands.BucketType.user)
     async def challenge(self, ctx, people: discord.Member, *quiz_type):
         type_str = " ".join(list(quiz_type))
         available_types = ['yes or no question', 'multiple choices question']
