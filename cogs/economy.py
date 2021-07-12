@@ -107,9 +107,12 @@ class Economy(commands.Cog, name="economy"):
             else:
                 await ctx.send(f"You only have {item_amount} {item_name}, peko!")
         else:
-            user.deleteMoney(amount)
-            other.addMoney(amount)
-            await ctx.send(f"Given {amount} {self.unit} to {member.display_name}, peko.")
+            if user.getWallet() <= amount:
+                user.deleteMoney(amount)
+                other.addMoney(amount)
+                await ctx.send(f"Given {amount} {self.unit} to {member.display_name}, peko.")
+            else:
+                await ctx.send(f"You don't have enough {self.unit} to give peko!")
 
 
 def setup(bot):
