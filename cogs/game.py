@@ -27,16 +27,16 @@ class Game(commands.Cog, name="game"):
 
     @commands.command(name="challenge", description="Challenge yourself or people with my quiz peko.")
     @commands.cooldown(rate=1, per=60)
-    async def challenge(self, ctx, people=None, *quiz_type):
+    async def challenge(self, ctx, people: discord.Member, *quiz_type):
         user = Bank(ctx.message.author.id)
         type_str = " ".join(list(quiz_type))
         available_types = ['yes or no question', 'multiple choices question']
         if people is None:
             return await ctx.message.reply("Please specify who will take the challenge, peko!")
-        elif people == "me" or extract_string(people, "!", ">") == ctx.message.author.id:
+        elif people == "me":
             member_object = ctx.message.author
         else:
-            member_object = ctx.message.guild.get_member(extract_string(people, "!", ">"))
+            member_object = people
         if member_object is None:
             return await ctx.message.reply("Please specify correct person who will take the challenge, peko!")
         if type_str not in available_types or len(list(quiz_type)) == 0:
@@ -72,6 +72,7 @@ class Game(commands.Cog, name="game"):
             no = "❌"
             embed = generate_embed()
             embed.add_field(name="Is it true?", value=f"Choose {yes} or {no}", inline=False)
+            await ctx.send(member_object.mention)
             msg = await ctx.send(embed=embed)
             emotes = [yes, no]
             for emote in emotes:
