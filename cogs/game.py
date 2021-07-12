@@ -28,7 +28,6 @@ class Game(commands.Cog, name="game"):
     @commands.command(name="challenge", description="Challenge yourself or people with my quiz peko.")
     @commands.cooldown(rate=1, per=60)
     async def challenge(self, ctx, people: discord.Member, *quiz_type):
-        user = Bank(ctx.message.author.id)
         type_str = " ".join(list(quiz_type))
         available_types = ['yes or no question', 'multiple choices question']
         if people is None:
@@ -41,6 +40,7 @@ class Game(commands.Cog, name="game"):
             return await ctx.message.reply("Please specify correct person who will take the challenge, peko!")
         if type_str not in available_types or len(list(quiz_type)) == 0:
             return await ctx.message.reply("Pekora can't recognise what challenge you are talking about, peko.")
+        user = Bank(member_object.id)
         url = "https://opentdb.com/api.php?amount=1"
         if type_str == available_types[0]:
             url += "&type=boolean"
@@ -86,7 +86,7 @@ class Game(commands.Cog, name="game"):
                 await msg.edit(embed=embed)
                 if answer == correct:
                     user.addMoney(prize)
-                    await ctx.send(f"Congratulations, peko! {ctx.message.author.mention} answered correctly and get "
+                    await ctx.send(f"Congratulations, peko! {member_object.mention} answered correctly and get "
                                    f"{prize}{unit}.")
                 else:
                     await ctx.send("Too bad, try again next time, peko.")
@@ -115,7 +115,7 @@ class Game(commands.Cog, name="game"):
                 await msg.edit(embed=embed)
                 if answer == poll.index(correct):
                     user.addMoney(prize + prize * (10 / 100))
-                    await ctx.send(f"Congratulations, peko! {ctx.message.author.mention} answered correctly and get "
+                    await ctx.send(f"Congratulations, peko! {member_object.mention} answered correctly and get "
                                    f"{prize + prize * (20 / 100)}{unit}.")
                 else:
                     await ctx.send("Too bad, try again next time, peko.")
