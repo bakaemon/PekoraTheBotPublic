@@ -26,7 +26,7 @@ class Game(commands.Cog, name="game"):
         self.bot = bot
 
     @commands.command(name="challenge", description="Challenge yourself or people with my quiz peko.")
-    @commands.cooldown(rate=1, per=10)
+    @commands.cooldown(rate=1, per=60)
     async def challenge(self, ctx, people=None, *quiz_type):
         user = Bank(ctx.message.author.id)
         type_str = " ".join(list(quiz_type))
