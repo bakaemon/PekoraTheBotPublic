@@ -83,6 +83,8 @@ class Game(commands.Cog, name="game"):
                 reactions, user_answer = await self.bot.wait_for('reaction_add', timeout=30.0, check=check)
                 answer = "True" if reactions.emoji == yes else "False"
                 embed = generate_embed()
+                embed.add_field(name="Your answer:",
+                                value=f"{reactions.emoji}:")
                 embed.add_field(name="Correct answer:", value=f"{yes if correct == 'True' else no}")
                 await msg.edit(embed=embed)
                 if answer == correct:
