@@ -119,7 +119,7 @@ class Economy(commands.Cog, name="economy"):
                 user.deleteMoney(amount)
                 other.addMoney(amount)
                 if member.id == self.bot.user.id:
-                    await ctx.send(f"Hai! I got {amount} {self.unit} thanks for your support, peko!")
+                    await ctx.send(f"Hai! I got {amount} {self.unit} from you! Thanks for your support, peko!")
                 else:
                     await ctx.send(f"Given {amount} {self.unit} to {member.display_name}, peko.")
             else:
