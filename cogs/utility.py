@@ -221,12 +221,13 @@ class Utility(commands.Cog, name="utility"):
         else:
             output_text = translated_text['output']
         embed = discord.Embed(title="Translator Pekora desu!",
-                              description="Let's me translate for you, peko!")
+                              description="Let's me translate for you, peko!", color=discord.Color.blue())
         embed.add_field(name="Original text", value=text, inline=False)
         embed.add_field(name=f"Translated from "
                              f"{langCodeToName(origin_lang) }"
                              f" to {langCodeToName(target_lang)}:",
                         value=output_text)
+        embed.set_footer(text="Powered by Google Translate", icon_url="https://upload.wikimedia.org/wikipedia/commons/d/db/Google_Translate_Icon.png")
         await ctx.send(embed=embed)
 
 
