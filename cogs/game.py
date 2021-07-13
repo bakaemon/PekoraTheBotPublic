@@ -134,6 +134,8 @@ class Game(commands.Cog, name="game"):
     @commands.command(name="dice", help="Guess where the dice roll and take your carrots,...or lose them.")
     async def dice(self, ctx, money: int, number=None):
         user = Bank(ctx.message.author.id)
+        if money > user.getWallet():
+            return await ctx.send(f"You don't have enough {money}{unit} to bet, peko!")
         system_number = random.choice(range(0, 7))
         user_num = 0
         if not money:
@@ -169,14 +171,18 @@ class Game(commands.Cog, name="game"):
     async def coin(self, ctx, money: int, bet: str):
         user = Bank(ctx.message.author.id)
         system_result = random.choice(['head', 'tail'])
-        if bet == system_result:
-            user.addMoney(money)
-            await ctx.message.reply(f"The coin roll to **_{system_result}_**.\n"
-                                    f"Congratulations! You got {money}{unit}, peko!")
+        if money <= user.getWallet():
+            if bet == system_result:
+                user.addMoney(money)
+                await ctx.message.reply(f"The coin roll to **_{system_result}_**.\n"
+                                        f"Congratulations! You got {money}{unit}, peko!")
+            else:
+                user.deleteMoney(money)
+                await ctx.message.reply(f"The coin roll to **_{system_result}_**.\n"
+                                        f"You lose {money}{unit}. Be lucky next time!")
         else:
-            user.deleteMoney(money)
-            await ctx.message.reply(f"The coin roll to **_{system_result}_**.\n"
-                                    f"You lose {money}{unit}. Be lucky next time!")
+            await ctx.message.reply(f"You don't have enough {money}{unit} to bet, peko!")
+
 
 
 def setup(bot):
