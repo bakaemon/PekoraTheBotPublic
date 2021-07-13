@@ -180,7 +180,7 @@ class Game(commands.Cog, name="game"):
         user = Bank(ctx.message.author.id)
         system_result = random.choice(['head', 'tail'])
         money = int(money)
-        msg = await ctx.message.reply("Flipping the coin...")
+        msg = await ctx.message.reply("🪙Flipping the coin...")
         if money <= user.getWallet():
             if bet == system_result:
                 user.addMoney(money)
