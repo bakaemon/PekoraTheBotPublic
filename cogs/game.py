@@ -5,6 +5,8 @@ import random
 import sys
 import requests
 import discord
+
+from helpers.finder import find
 from helpers.pekofy import pekofy
 from helpers.extractstring import extract_string
 from helpers.replied_reference import replied_reference
@@ -136,12 +138,15 @@ class Game(commands.Cog, name="game"):
         user = Bank(ctx.message.author.id)
         if money > user.getWallet():
             return await ctx.send(f"You don't have enough {money}{unit} to bet, peko!")
+        if not money:
+            return await ctx.send("Please place your bet, peko.")
+        money = int(money)
         system_number = random.choice(range(0, 7))
         user_num = 0
-        if not money:
-            await ctx.send("Please place your bet, peko.")
+
         if not number:
-            embed = discord.Embed(title="Die the dice!", description=f"You are betting: {money}{unit} Please choose the number from 1 to 6:")
+            embed = discord.Embed(title="Die the dice!",
+                                  description=f"You are betting: {money}{unit} Please choose the number from 1 to 6:")
             await ctx.send(embed=embed)
 
             def check(m):
@@ -153,7 +158,7 @@ class Game(commands.Cog, name="game"):
             except asyncio.TimeoutError:
                 await ctx.message.reply(f"Too much time has passed, peko!")
         else:
-            user_num = number
+            user_num = int(number)
 
         if 0 < user_num < 7:
             if user_num == system_number:
@@ -168,9 +173,10 @@ class Game(commands.Cog, name="game"):
             await ctx.send("Please specify the number you want to bet on, peko.")
 
     @commands.command(name="coin", help="Guess where the coin roll to and take your carrots,...or lose them.")
-    async def coin(self, ctx, money: int, bet: str):
+    async def coin(self, ctx, money, bet: str):
         user = Bank(ctx.message.author.id)
         system_result = random.choice(['head', 'tail'])
+        money = int(money)
         if money <= user.getWallet():
             if bet == system_result:
                 user.addMoney(money)
@@ -183,6 +189,26 @@ class Game(commands.Cog, name="game"):
         else:
             await ctx.message.reply(f"You don't have enough {money}{unit} to bet, peko!")
 
+    @commands.command(name="bet", help="Cool command to use both coin and dice commands.\n"
+                                       "**User**: pekora bet ``amount of money`` to ``your guess`` for ``type of "
+                                       "game`` game.")
+    async def bet(self, ctx, money, *args):
+        arguments = list(args)
+        money = int(money)
+        if not money:
+            return await ctx.send("You must specify the amount you want to bet, peko.")
+        if arguments[0] != "to":
+            return await ctx.send("Missing keyword ``to``, peko.")
+        arg_txt = " ".join(arguments)
+        guess = extract_string(arg_txt, "to ", " for")
+        type_of_game = extract_string(arg_txt.replace(guess, ""), "for ", " game")
+        game_object = self.bot.get_cog(name="game").get_commands()
+        game_name = [c.name if c.name == type_of_game else "" for c in game_object]
+        try:
+            the_game = self.bot.get_command(game_name[game_name.index(type_of_game)])
+        except ValueError:
+            return await ctx.send(f"The game {type_of_game} is not existed, peko.")
+        await ctx.invoke(the_game, money, guess)
 
 
 def setup(bot):
