@@ -55,7 +55,8 @@ class Bank:
         self._updateBalance(self.getBalance() + amount)
 
     def deleteBalance(self, amount: int):
-        self._updateBalance(self.getBalance() - amount)
+        if self.getBalance() > amount:
+            self._updateBalance(self.getBalance() - amount)
 
     def _updateBalance(self, amount: int):
         self._economy.update_one({"user_id": self.userID},
@@ -69,7 +70,8 @@ class Bank:
         self._updateWallet(self.getWallet() + amount)
 
     def deleteMoney(self, amount: int):
-        self._updateWallet(self.getWallet() - amount)
+        if amount < self.getWallet():
+            self._updateWallet(self.getWallet() - amount)
 
     def _updateWallet(self, amount: int):
         self._economy.update_one({"user_id": self.userID},
