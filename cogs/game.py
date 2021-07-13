@@ -27,15 +27,16 @@ class Game(commands.Cog, name="game"):
 
     @commands.command(name="challenge", description="Challenge yourself or people with my quiz peko.")
     @commands.cooldown(rate=1, per=80, type=commands.BucketType.user)
-    async def challenge(self, ctx, people: discord.Member, *quiz_type):
+    async def challenge(self, ctx, people, *quiz_type):
         type_str = " ".join(list(quiz_type))
         available_types = ['yes or no question', 'multiple choices question']
+        member_id = int(extract_string(people, s="!", e=">")) if (people[0] == "<" and people[-1:] == ">") else 0
         if people is None:
             return await ctx.message.reply("Please specify who will take the challenge, peko!")
-        elif people == "me":
+        elif people == "me" or member_id == ctx.message.author.id:
             member_object = ctx.message.author
         else:
-            member_object = people
+            member_object = ctx.message.guild.get_member(member_id)
         if member_object is None:
             return await ctx.message.reply("Please specify correct person who will take the challenge, peko!")
         if type_str not in available_types or len(list(quiz_type)) == 0:
