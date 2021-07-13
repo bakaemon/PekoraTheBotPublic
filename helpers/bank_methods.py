@@ -98,7 +98,6 @@ class Bank:
                                      })
         elif find(self.getInventory(), 'name', item['name']) != -1:
             new_amount = self.getAmountOfItem(item['name']) + amount
-            print(self.getAmountOfItem(item['name']))
             self._updateItemAmount(item, new_amount)
 
     def deleteItem(self, item: dict, amount=1):

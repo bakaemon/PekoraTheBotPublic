@@ -1,11 +1,14 @@
+import asyncio
 import json
 import os
+import random
 import sys
 
 import discord
 from discord.ext import commands
 from helpers.bank_methods import Bank
 from helpers.fomattingnumber import human_format as format
+from helpers.pagination import chunks
 
 if not os.path.isfile("config.json"):
     sys.exit("'config.json' not found! Please add it and try again.")
@@ -13,8 +16,9 @@ else:
     with open("config.json") as file:
         config = json.load(file)
 
-with open("assets/ecoConfig.json") as file:
-    unit = json.load(file)['unit']
+# with open("assets/ecoConfig.json") as file:
+#     unit = json.load(file)['unit']
+unit = "🥕"
 
 
 def find(lst, key, value):
@@ -116,6 +120,109 @@ class Economy(commands.Cog, name="economy"):
                 await ctx.send(f"Given {amount} {self.unit} to {member.display_name}, peko.")
             else:
                 await ctx.send(f"You don't have enough {self.unit} to give peko!")
+
+    @commands.command(name="shop", description="Shopping time! Use `` to buy items or `` to sell unwanted item for "
+                                               "profit, peko!")
+    async def shop(self, ctx, *args):
+        arguments = list(args)
+        item_pool = json.load(open("assets/ecoConfig.json"))['items']
+        if not arguments:
+            shop_list = list(chunks(item_pool, 4))
+            total_page = len(shop_list)
+
+            def generateEmbed(page):
+                if page >= total_page:
+                    page = 0
+                elif page < 0:
+                    page = total_page - 1
+                embed_object = discord.Embed(title="Welcome to ``rabbit's ears`` convenient store!, peko",
+                                             description="Dear customer, you can feel free to buy anything "
+                                                         "or sell anything with a reasonable price, peko!")
+                for item in shop_list[page]:
+                    embed_object.add_field(name=f"{item['name']} - {item['price']}{self.unit}",
+                                           value=item['description'], inline=False)
+                embed_object.set_footer(text=f"Page: {page + 1} of {total_page}")
+                return embed_object
+
+            block = await ctx.send(embed=generateEmbed(0))
+            emotes = ["⬅️", "➡️"]
+            for emote in emotes:
+                await block.add_reaction(emote)
+
+            def check(reactions, users):
+                return users == ctx.message.author and str(reactions.emoji) in emotes
+
+            try:
+                s = 0
+                while s != total_page + 1:
+                    if s < 0:
+                        s = total_page - 1
+                    elif s >= total_page:
+                        s = 0
+                    reaction, user = await self.bot.wait_for('reaction_add', timeout=300.0, check=check)
+                    if reaction.emoji == emotes[0]:
+                        s -= 1
+                        for e in emotes:
+                            await block.clear_reaction(emoji=e)
+                        for e in emotes:
+                            await block.add_reaction(emoji=e)
+                        await block.edit(embed=generateEmbed(s))
+                    if reaction.emoji == emotes[1]:
+                        s += 1
+                        for e in emotes:
+                            await block.clear_reaction(emoji=e)
+                        for e in emotes:
+                            await block.add_reaction(emoji=e)
+                        await block.edit(embed=generateEmbed(s))
+            except asyncio.TimeoutError:
+                for e in emotes:
+                    await block.clear_reaction(emoji=e)
+        else:
+            subcommand = arguments[0]
+            user = begin(ctx)
+            amount = max(int(arguments[1]), 0)
+            if not amount or amount == 0:
+                return await ctx.message.reply("The amount of item you mentioned is wrong, peko!")
+            item_name = " ".join(arguments[2:])
+            item_code = find(item_pool, "name", item_name)
+            if item_code == -1:
+                return await ctx.message.reply("The item doesn't exist peko!")
+            price = item_pool[item_code]['price']
+            if subcommand == "buy":
+                price = item_pool[item_code]['price']
+                if user.getWallet() >= price:
+                    await ctx.send(
+                        f"{ctx.message.author.display_name} bought {item_name} with {price}{self.unit}, peko.")
+                    user.deleteMoney(amount=price)
+                    user.addItem(item_pool[item_code], amount=amount)
+                else:
+                    await ctx.send(f"You don't have enough {self.unit}, peko!")
+            elif subcommand == "sell":
+                sell_price = int(price * (33 / 100))
+                available_amount = user.getAmountOfItem(item_name=item_name)
+                if available_amount == 0:
+                    await ctx.send(f"You don't have this item, peko!")
+                elif available_amount >= amount:
+                    user.addMoney(amount=sell_price)
+                    user.deleteItem(item_pool[item_code], amount=amount)
+                    await ctx.send(
+                        f"{ctx.message.author.display_name} sold {item_name} for {sell_price}{self.unit}, peko.")
+                else:
+                    await ctx.send(f"You only have {available_amount} {item_name}, peko!")
+
+    @commands.command(name="buy", description="Buy item from shop, peko!")
+    async def buy(self, ctx, amount, *item_name):
+        name = list(item_name)
+        query = ['buy', amount]
+        query.extend(name)
+        await ctx.invoke(self.bot.get_command('shop'), *query)
+
+    @commands.command(name="sell", description="Sell item to shop, peko!")
+    async def sell(self, ctx, amount, *item_name):
+        name = list(item_name)
+        query = ['sell', amount]
+        query.extend(name)
+        await ctx.invoke(self.bot.get_command('shop'), *query)
 
 
 def setup(bot):

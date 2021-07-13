@@ -7,11 +7,72 @@
       "price": 500
     },
     {
-      "name": "Crypto",
-      "description": "Each credit point has the value of 100 \uD83E\uDD55",
+      "name": "TNT",
+      "description": "A great tool for demolition peko.",
       "amount": 1,
-      "price": 100
+      "price": 6000
+    },
+    {
+      "name": "Fishing pole",
+      "description": "A good old fishing pole for poor villager to surviving other day, not that great but trustworthy nonetheless",
+      "amount": 1,
+      "price": 10000
+    },
+    {
+      "name": "Hunting rifle",
+      "description": "The rifle that is mean for taking down a deer, can be overkill for taking down a rabbit, mind you.",
+      "amount": 1,
+      "price": 18000
+    },
+    {
+      "name": "Rabbit",
+      "description": "A cute creature that definitely not Pekora, can feed a man a day of hard work and can be sold for a good price",
+      "amount": 1,
+      "price": 300
+    },
+    {
+      "name": "Smartphone",
+      "description": "A typical smartphone that people always use. You can play gacha game on it.",
+      "amount": 1,
+      "price": 7000
+    },
+     {
+      "name": "Big Tuna",
+      "description": "A big, fat white Tuna that provides you lots of meat, while the fat can be also eaten raw, melted inside your mouth.",
+      "amount": 1,
+      "price": 1000
+    },
+     {
+      "name": "Medium-sized Tuna",
+      "description": "The Tuna with decent quality that you and other fisherman commonly caught. Can be sold for profit!",
+      "amount": 1,
+      "price": 500
+    },
+     {
+      "name": "Smol Tuna",
+      "description": "A small, tiny Tuna that can be great as cat food!",
+      "amount": 1,
+      "price": 200
+    },
+     {
+      "name": "Copper Carrot",
+      "description": "Carrot which is made out of Copper...why?",
+      "amount": 1,
+      "price": 5000
+    },
+     {
+      "name": "Silver Carrot",
+      "description": "What make a carrot better is make it from silver, isn't that great idea?",
+      "amount": 1,
+      "price": 15000
+    },
+     {
+      "name": "Golden Carrot",
+      "description": "Ah, shiny! Pekora might be jealous of you!",
+      "amount": 1,
+      "price": 45000
     }
+
   ],
   "unit": "🥕"
 }
