@@ -10,6 +10,7 @@ from helpers.translation import *
 from helpers.fomattingnumber import human_format
 from helpers.extractstring import extract_string
 from helpers.zerochan_scrapper import getImages, getImagesOnPage
+from html import unescape
 import discord
 from discord.ext import commands
 
@@ -226,7 +227,7 @@ class Utility(commands.Cog, name="utility"):
         embed.add_field(name=f"Translated from "
                              f"{langCodeToName(origin_lang) }"
                              f" to {langCodeToName(target_lang)}:",
-                        value=output_text)
+                        value=unescape(output_text))
         embed.set_footer(text="Powered by Google Translate", icon_url="https://upload.wikimedia.org/wikipedia/commons/d/db/Google_Translate_Icon.png")
         await ctx.send(embed=embed)
 
