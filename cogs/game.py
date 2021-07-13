@@ -165,11 +165,11 @@ class Game(commands.Cog, name="game"):
         if 0 < user_num < 7:
             if user_num == system_number:
                 user.addMoney(money)
-                await msg.edit(f"The dice roll {system_number}.\n"
+                await msg.edit(content=f"The dice roll {system_number}.\n"
                                f"Congratulations! You got {money}{unit}, peko!")
             else:
                 user.deleteMoney(money)
-                await msg.edit(f"The dice roll {system_number}.\n"
+                await msg.edit(content=f"The dice roll {system_number}.\n"
                                f"You lose {money}{unit}. Be lucky next time!")
         else:
             await msg.delete()
@@ -180,16 +180,16 @@ class Game(commands.Cog, name="game"):
         user = Bank(ctx.message.author.id)
         system_result = random.choice(['head', 'tail'])
         money = int(money)
-        msg = await ctx.message.reply("🪙Flipping the coin...")
+        msg = await ctx.send("🪙Flipping the coin...")
         if money <= user.getWallet():
             if bet == system_result:
                 user.addMoney(money)
-                await msg.edit(f"The coin roll to **_{system_result}_**.\n"
+                await msg.edit(content=f"The coin roll to **_{system_result}_**.\n"
                                f"Congratulations! You got {money}{unit}, peko!")
             else:
                 user.deleteMoney(money)
-                await msg.edit(f"The coin roll to **_{system_result}_**.\n"
-                               f"You lose {money}{unit}. Be lucky next time!")
+                await msg.edit(content=f"The coin roll to **_{system_result}_**.\nYou lose {money}{unit}"
+                                       f". Be lucky next time!")
         else:
             await msg.delete()
             await ctx.send(f"You don't have enough {money}{unit} to bet, peko!")
