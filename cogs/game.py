@@ -178,7 +178,7 @@ class Game(commands.Cog, name="game"):
     @commands.command(name="coin", help="Guess where the coin roll to and take your carrots,...or lose them.")
     async def coin(self, ctx, money, bet: str):
         user = Bank(ctx.message.author.id)
-        system_result = random.choice(['head', 'tail'])
+        system_result = random.choice(['head', 'tail', 'head', 'tail', 'head', 'tail'])
         money = int(money)
         msg = await ctx.send("🪙Flipping the coin...")
         if money <= user.getWallet():
