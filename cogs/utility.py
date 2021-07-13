@@ -184,9 +184,11 @@ class Utility(commands.Cog, name="utility"):
                 await ctx.send(embed=generateEmbed(random.choice(range(len(urls)))))
 
     @commands.command(name="translate", aliases=['trans'], help="Let's Pekora translate thing for you!\n"
-                                                                "Use: pekora translate (something) from [Original "
-                                                                "language] "
-                                                                " to [other language]")
+                                                                "Use: pekora translate (``something``) from ``Original "
+                                                                "language`` "
+                                                                " to ``other language``\n"
+                                                                "Where the language can be either language code or language"
+                                                                " name, peko.")
     async def translate(self, ctx, *args):
         arguments = list(args)
         text_raw = extract_string(" ".join(arguments), "(", ")")
