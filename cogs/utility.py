@@ -208,10 +208,10 @@ class Utility(commands.Cog, name="utility"):
 
         text = text_raw
 
-        origin_lang = arguments[keyword_from+1:keyword_to][0]
+        origin_lang = arguments[keyword_from + 1:keyword_to][0]
         origin_lang = langNameToCode(origin_lang) if isLangName(origin_lang) else origin_lang \
             if isLangCode(origin_lang) else None
-        target_lang = " ".join(arguments[keyword_to+1:])
+        target_lang = " ".join(arguments[keyword_to + 1:])
         target_lang = langNameToCode(target_lang) if isLangName(target_lang) else target_lang \
             if isLangCode(target_lang) else None
         if origin_lang is None or target_lang is None:
@@ -225,12 +225,12 @@ class Utility(commands.Cog, name="utility"):
                               description="Let's me translate for you, peko!", color=discord.Color.blue())
         embed.add_field(name="Original text", value=text, inline=False)
         embed.add_field(name=f"Translated from "
-                             f"{langCodeToName(origin_lang) }"
+                             f"{langCodeToName(origin_lang)}"
                              f" to {langCodeToName(target_lang)}:",
                         value=unescape(output_text))
-        embed.set_footer(text="Powered by Google Translate", icon_url="https://upload.wikimedia.org/wikipedia/commons/d/db/Google_Translate_Icon.png")
+        embed.set_footer(text="Powered by Google Translate",
+                         icon_url="https://upload.wikimedia.org/wikipedia/commons/d/db/Google_Translate_Icon.png")
         await ctx.send(embed=embed)
-
 
 
 def setup(bot):

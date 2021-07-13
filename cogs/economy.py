@@ -8,6 +8,7 @@ import discord
 from discord.ext import commands
 from helpers.bank_methods import Bank
 from helpers.fomattingnumber import human_format as format
+from helpers.finder import find
 from helpers.pagination import chunks
 
 if not os.path.isfile("config.json"):
