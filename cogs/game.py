@@ -25,7 +25,7 @@ class Game(commands.Cog, name="game"):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="challenge", description="Challenge yourself or people with my quiz peko.")
+    @commands.command(name="challenge", help="Challenge yourself or people with my quiz peko.")
     @commands.cooldown(rate=1, per=80, type=commands.BucketType.user)
     async def challenge(self, ctx, people, *quiz_type):
         type_str = " ".join(list(quiz_type))
@@ -130,6 +130,40 @@ class Game(commands.Cog, name="game"):
                 for e in emotes:
                     await msg.clear_reaction(emoji=e)
                 await ctx.send("Timeout, peko!")
+
+    @commands.command(name="dice", help="Guess where the dice roll and take your carrots,...or lose them.")
+    async def dice(self, ctx, money: int, number=None):
+        user = Bank(ctx.message.author.id)
+        system_number = random.choice(range(0, 7))
+        user_num = 0
+        if not money:
+            await ctx.send("Please place your bet, peko.")
+        if not number:
+            embed = discord.Embed(title="Die the dice!", description="Please choose the number from 1 to 6:")
+            await ctx.send(embed=embed)
+
+            def check(m):
+                return m.author == ctx.author and m.content.isdigit()
+
+            try:
+                guess = await self.bot.wait_for('message', check=check, timeout=15.0)
+                user_num = int(guess.content)
+            except asyncio.TimeoutError:
+                await ctx.message.reply(f"Too much time has passed, peko!")
+        else:
+            user_num = number
+
+        if 0 < user_num < 7:
+            if user_num == system_number:
+                user.addMoney(money)
+                await ctx.message.reply(f"The dice roll {system_number}.\n"
+                                        f"Congratulations! You got {money}{unit}, peko!")
+            else:
+                user.deleteMoney(money)
+                await ctx.message.reply(f"The dice roll {system_number}.\n"
+                                        f"You lose {money}{unit}. Be lucky next time!")
+        else:
+            await ctx.send("Please specify the number you want to bet on, peko.")
 
 
 def setup(bot):
