@@ -118,7 +118,10 @@ class Economy(commands.Cog, name="economy"):
             if user.getWallet() >= amount:
                 user.deleteMoney(amount)
                 other.addMoney(amount)
-                await ctx.send(f"Given {amount} {self.unit} to {member.display_name}, peko.")
+                if member.id == self.bot.user.id:
+                    await ctx.send(f"Hai! I got {amount} {self.unit} thanks for your support, peko!")
+                else:
+                    await ctx.send(f"Given {amount} {self.unit} to {member.display_name}, peko.")
             else:
                 await ctx.send(f"You don't have enough {self.unit} to give peko!")
 
