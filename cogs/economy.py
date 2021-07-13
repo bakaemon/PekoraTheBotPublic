@@ -50,8 +50,11 @@ class Economy(commands.Cog, name="economy"):
     @commands.command(name="withdraw", aliases=['draw'],
                       help="Withdraw your money from bank, peko.")
     async def withdraw(self, ctx, amount_str):
-        amount = int(amount_str)
         user = begin(ctx)
+        if amount_str in ['all', 'everything']:
+            amount = user.getBalance()
+        else:
+            amount = int(amount_str)
         if user.getBalance() < amount:
             message = f"You don't have enough {self.unit} in bank, peko."
         else:
@@ -67,8 +70,12 @@ class Economy(commands.Cog, name="economy"):
     @commands.command(name="deposit", aliases=['depo'],
                       help=f"Deposit your 🥕 to the bank, peko.")
     async def deposit(self, ctx, amount_str):
-        amount = int(amount_str)
         user = begin(ctx)
+        if amount_str in ['all', 'everything']:
+            amount = user.getWallet()
+        else:
+            amount = int(amount_str)
+
         if user.getWallet() < amount:
             message = f"You don't have enough {self.unit} in wallet, peko."
         else:
