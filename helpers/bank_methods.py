@@ -12,8 +12,7 @@ def find(lst, key, value):
 class Bank:
     def __init__(self, userID: int):
         self.userID = str(userID)
-        client = MongoClient("mongodb+srv://admin2009:"
-                             "binhminh2001@cluster0.zb7re.mongodb.net/")
+        client = MongoClient("YOUR_MONGODB_URI_HERE")
         try:
             client.server_info()  # Forces a call.
         except ServerSelectionTimeoutError:
