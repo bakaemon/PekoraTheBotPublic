@@ -55,7 +55,7 @@ class Bank:
         self._updateBalance(self.getBalance() + amount)
 
     def deleteBalance(self, amount: int):
-        if self.getBalance() >= amount:
+        if 0 < amount <= self.getBalance():
             self._updateBalance(self.getBalance() - amount)
 
     def _updateBalance(self, amount: int):
@@ -70,7 +70,7 @@ class Bank:
         self._updateWallet(self.getWallet() + amount)
 
     def deleteMoney(self, amount: int):
-        if amount <= self.getWallet():
+        if 0 < amount <= self.getWallet():
             self._updateWallet(self.getWallet() - amount)
 
     def _updateWallet(self, amount: int):
@@ -105,11 +105,11 @@ class Bank:
     def deleteItem(self, item: dict, amount=1):
         if 0 != amount == self.getAmountOfItem(item['name']) != 0:
             self._economy.update_one({"user_id": self.userID},
-                                             {
-                                                 "$pull": {
-                                                     "inventory": {"name": item["name"]}
-                                                 }
-                                             })
+                                     {
+                                         "$pull": {
+                                             "inventory": {"name": item["name"]}
+                                         }
+                                     })
 
             return 2
         elif amount < self.getAmountOfItem(item['name']) and find(self.getInventory(), 'name', item['name']) != -1:
