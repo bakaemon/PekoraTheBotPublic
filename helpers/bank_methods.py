@@ -55,7 +55,7 @@ class Bank:
         self._updateBalance(self.getBalance() + amount)
 
     def deleteBalance(self, amount: int):
-        if self.getBalance()  amount:
+        if self.getBalance() >= amount:
             self._updateBalance(self.getBalance() - amount)
 
     def _updateBalance(self, amount: int):
