@@ -143,7 +143,7 @@ class Game(commands.Cog, name="game"):
         money = int(money)
         system_number = random.choice(range(0, 7))
         user_num = 0
-
+        msg = None
         if not number:
             embed = discord.Embed(title="Die the dice!",
                                   description=f"You are betting: {money}{unit} Please choose the number from 1 to 6:")
@@ -155,21 +155,24 @@ class Game(commands.Cog, name="game"):
             try:
                 guess = await self.bot.wait_for('message', check=check, timeout=15.0)
                 user_num = int(guess.content)
+                msg = await ctx.send("🎲 Rolling the dice...")
             except asyncio.TimeoutError:
-                await ctx.message.reply(f"Too much time has passed, peko!")
+                return await ctx.message.reply(f"Too much time has passed, peko!")
         else:
+            msg = await ctx.send("🎲 Rolling the dice...")
             user_num = int(number)
 
         if 0 < user_num < 7:
             if user_num == system_number:
                 user.addMoney(money)
-                await ctx.message.reply(f"The dice roll {system_number}.\n"
-                                        f"Congratulations! You got {money}{unit}, peko!")
+                await msg.edit(f"The dice roll {system_number}.\n"
+                               f"Congratulations! You got {money}{unit}, peko!")
             else:
                 user.deleteMoney(money)
-                await ctx.message.reply(f"The dice roll {system_number}.\n"
-                                        f"You lose {money}{unit}. Be lucky next time!")
+                await msg.edit(f"The dice roll {system_number}.\n"
+                               f"You lose {money}{unit}. Be lucky next time!")
         else:
+            await msg.delete()
             await ctx.send("Please specify the number you want to bet on, peko.")
 
     @commands.command(name="coin", help="Guess where the coin roll to and take your carrots,...or lose them.")
@@ -177,17 +180,19 @@ class Game(commands.Cog, name="game"):
         user = Bank(ctx.message.author.id)
         system_result = random.choice(['head', 'tail'])
         money = int(money)
+        msg = await ctx.message.reply("Flipping the coin...")
         if money <= user.getWallet():
             if bet == system_result:
                 user.addMoney(money)
-                await ctx.message.reply(f"The coin roll to **_{system_result}_**.\n"
-                                        f"Congratulations! You got {money}{unit}, peko!")
+                await msg.reply(f"The coin roll to **_{system_result}_**.\n"
+                                f"Congratulations! You got {money}{unit}, peko!")
             else:
                 user.deleteMoney(money)
-                await ctx.message.reply(f"The coin roll to **_{system_result}_**.\n"
-                                        f"You lose {money}{unit}. Be lucky next time!")
+                await msg.edit(f"The coin roll to **_{system_result}_**.\n"
+                               f"You lose {money}{unit}. Be lucky next time!")
         else:
-            await ctx.message.reply(f"You don't have enough {money}{unit} to bet, peko!")
+            await msg.delete()
+            await ctx.send(f"You don't have enough {money}{unit} to bet, peko!")
 
     @commands.command(name="bet", help="Cool command to use both coin and dice commands.\n"
                                        "**User**: pekora bet ``amount of money`` to ``your guess`` for ``type of "
