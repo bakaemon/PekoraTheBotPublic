@@ -139,7 +139,7 @@ class Game(commands.Cog, name="game"):
         if not money:
             await ctx.send("Please place your bet, peko.")
         if not number:
-            embed = discord.Embed(title="Die the dice!", description="Please choose the number from 1 to 6:")
+            embed = discord.Embed(title="Die the dice!", description=f"You are betting: {money}{unit} Please choose the number from 1 to 6:")
             await ctx.send(embed=embed)
 
             def check(m):
@@ -164,6 +164,19 @@ class Game(commands.Cog, name="game"):
                                         f"You lose {money}{unit}. Be lucky next time!")
         else:
             await ctx.send("Please specify the number you want to bet on, peko.")
+
+    @commands.command(name="coin", help="Guess where the coin roll to and take your carrots,...or lose them.")
+    async def coin(self, ctx, money: int, bet: str):
+        user = Bank(ctx.message.author.id)
+        system_result = random.choice(['head', 'tail'])
+        if bet == system_result:
+            user.addMoney(money)
+            await ctx.message.reply(f"The coin roll to **_{system_result}_**.\n"
+                                    f"Congratulations! You got {money}{unit}, peko!")
+        else:
+            user.deleteMoney(money)
+            await ctx.message.reply(f"The coin roll to **_{system_result}_**.\n"
+                                    f"You lose {money}{unit}. Be lucky next time!")
 
 
 def setup(bot):
