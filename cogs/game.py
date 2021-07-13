@@ -185,7 +185,7 @@ class Game(commands.Cog, name="game"):
             if bet == system_result:
                 user.addMoney(money)
                 await msg.edit(f"The coin roll to **_{system_result}_**.\n"
-                                f"Congratulations! You got {money}{unit}, peko!")
+                               f"Congratulations! You got {money}{unit}, peko!")
             else:
                 user.deleteMoney(money)
                 await msg.edit(f"The coin roll to **_{system_result}_**.\n"
