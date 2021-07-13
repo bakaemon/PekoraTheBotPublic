@@ -178,6 +178,8 @@ class Game(commands.Cog, name="game"):
     @commands.command(name="coin", help="Guess where the coin roll to and take your carrots,...or lose them.")
     async def coin(self, ctx, money, bet: str):
         user = Bank(ctx.message.author.id)
+        if bet not in ['head', 'tail']:
+            return await ctx.send("Your guess must be only either ``head`` or ``tail``")
         poll = ['head', 'tail', 'head', 'tail', 'head', 'tail']
         random.shuffle(poll)
         system_result = random.choice(poll)
