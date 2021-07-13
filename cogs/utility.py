@@ -5,6 +5,8 @@ import sys
 import requests
 import random
 from helpers.pekofy import pekofy
+from helpers.finder import find
+from helpers.translation import *
 from helpers.fomattingnumber import human_format
 from helpers.extractstring import extract_string
 from helpers.zerochan_scrapper import getImages, getImagesOnPage
@@ -180,6 +182,51 @@ class Utility(commands.Cog, name="utility"):
                     return
             elif type_search == "image":
                 await ctx.send(embed=generateEmbed(random.choice(range(len(urls)))))
+
+    @commands.command(name="translate", aliases=['trans'], help="Let's Pekora translate thing for you!\n"
+                                                                "Use: pekora translate (something) from [Original "
+                                                                "language] "
+                                                                " to [other language]")
+    async def translate(self, ctx, *args):
+        arguments = list(args)
+        text_raw = extract_string(" ".join(arguments), "(", ")")
+        if len(text_raw) <= 0:
+            return await ctx.send("Missing requesting translation text.")
+        argument_text = " ".join(arguments).replace(f"({text_raw})", "")
+        arguments = argument_text.split(" ")[1:]
+        try:
+            keyword_from = arguments.index('from')
+        except ValueError:
+            return await ctx.send("Missing keyword `from`")
+        try:
+            keyword_to = arguments.index('to')
+        except ValueError:
+            return await ctx.send("Missing keyword `to`")
+
+        text = text_raw
+
+        origin_lang = arguments[keyword_from+1:keyword_to][0]
+        origin_lang = langNameToCode(origin_lang) if isLangName(origin_lang) else origin_lang \
+            if isLangCode(origin_lang) else None
+        target_lang = " ".join(arguments[keyword_to+1:])
+        target_lang = langNameToCode(target_lang) if isLangName(target_lang) else target_lang \
+            if isLangCode(target_lang) else None
+        if origin_lang is None or target_lang is None:
+            return await ctx.send("Please check if the language is either correct language code or name peko.")
+        translated_text = translate(text=text, source=origin_lang, target=target_lang)
+        if translated_text['error']:
+            output_text = translated_text['error']
+        else:
+            output_text = translated_text['output']
+        embed = discord.Embed(title="Translator Pekora desu!",
+                              description="Let's me translate for you, peko!")
+        embed.add_field(name="Original text", value=text, inline=False)
+        embed.add_field(name=f"Translated from "
+                             f"{langCodeToName(origin_lang) }"
+                             f" to {langCodeToName(target_lang)}:",
+                        value=output_text)
+        await ctx.send(embed=embed)
+
 
 
 def setup(bot):
