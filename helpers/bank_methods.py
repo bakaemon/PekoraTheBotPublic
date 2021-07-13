@@ -75,7 +75,7 @@ class Bank:
         self._economy.update_one({"user_id": self.userID},
                                  {
                                      "$set": {
-                                         "wallet": amount
+                                         "wallet": int(amount)
                                      }
                                  })
 

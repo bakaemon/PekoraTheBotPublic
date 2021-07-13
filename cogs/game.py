@@ -111,13 +111,15 @@ class Game(commands.Cog, name="game"):
                 reactions, user_answer = await self.bot.wait_for('reaction_add', timeout=30.0, check=check)
                 answer = emotes.index(reactions.emoji)
                 embed = generate_embed()
+                embed.add_field(name="Your answer:",
+                                value=f"{emotes[answer]}:{poll[answer]}")
                 embed.add_field(name="Correct answer:",
                                 value=f"{emotes[poll.index(correct)]}:{poll[poll.index(correct)]}")
                 await msg.edit(embed=embed)
                 if answer == poll.index(correct):
-                    user.addMoney(prize + prize * (10 / 100))
+                    user.addMoney(int(prize + prize * (10 / 100)))
                     await ctx.send(f"Congratulations, peko! {member_object.mention} answered correctly and get "
-                                   f"{prize + prize * (20 / 100)}{unit}.")
+                                   f"{int(prize + prize * (20 / 100))}{unit}.")
                 else:
                     await ctx.send("Too bad, try again next time, peko.")
                 for e in emotes:
