@@ -252,7 +252,7 @@ class Game(commands.Cog, name="game"):
             "Crocodile": "🐊",
             "Turtle": "🐢"
         }
-        broken_rate = 0.01
+        broken_rate = 0.005
         commons = getTypeOfFish("common")
         rare = getTypeOfFish("rare")
         exotic = getTypeOfFish("exotic")
