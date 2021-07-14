@@ -37,24 +37,6 @@
       "price": 7000
     },
      {
-      "name": "Big Tuna",
-      "description": "A big, fat white Tuna that provides you lots of meat, while the fat can be also eaten raw, melted inside your mouth.",
-      "amount": 1,
-      "price": 1000
-    },
-     {
-      "name": "Medium-sized Tuna",
-      "description": "The Tuna with decent quality that you and other fisherman commonly caught. Can be sold for profit!",
-      "amount": 1,
-      "price": 500
-    },
-     {
-      "name": "Smol Tuna",
-      "description": "A small, tiny Tuna that can be great as cat food!",
-      "amount": 1,
-      "price": 200
-    },
-     {
       "name": "Copper Carrot",
       "description": "Carrot which is made out of Copper...why?",
       "amount": 1,

@@ -1,0 +1,165 @@
+{
+    "items": [
+        {
+            "name": "Carp",
+            "type": "common",
+            "aliases": [
+                "carp"
+            ],
+            "amount": 1,
+            "price": 200
+        },
+        {
+            "name": "Eel",
+            "type": "common",
+            "aliases": ["eel"],
+            "amount": 1,
+            "price": 180
+        },
+        {
+            "name": "Cod",
+            "type": "common",
+            "aliases": ["cod"],
+            "amount": 1,
+            "price": 200
+        },
+        {
+            "name": "Salmon" ,
+            "type": "common" ,
+            "aliases": [
+                "salmon"
+            ] ,
+            "amount": 1,
+            "price": 210
+        },
+        {
+            "name": "Flying fish",
+            "type": "rare",
+            "aliases": ["flying", "flying fish"],
+            "amount": 1,
+            "price": 300
+        },
+        {
+            "name": "Mini shark",
+            "type": "rare",
+            "aliases": ["mini shark"],
+            "amount": 1,
+            "price": 3000
+        },
+        {
+            "name": "Deepwater Man-fish",
+            "type": "rare",
+            "aliases": ["deepwater manfish", "manfish"],
+            "amount": 1,
+            "price": 1
+        },
+        {
+            "name": "squid",
+            "type": "rare",
+            "aliases": ["squid"],
+            "amount": 1,
+            "price": 1000
+        },
+        {
+            "name": "Glowing Squid",
+            "type": "exotic",
+            "aliases": ["glowing squid"],
+            "amount": 1,
+            "price": 1500
+        },
+        {
+            "name": "Piranha",
+            "type": "exotic",
+            "aliases": ["piranha"],
+            "amount": 1,
+            "price": 1200
+        },
+        {
+            "name": "Ghost Eel",
+            "type": "exotic",
+            "aliases": ["ghost eel"],
+            "amount": 1,
+            "price": 1500
+        },
+        {
+            "name": "Glowing Jelly Fish",
+            "type": "exotic",
+            "aliases": ["glowing jelly fish"],
+            "amount": 1,
+            "price": 1500
+        },
+        {
+            "name": "Octopus",
+            "type": "exotic",
+            "aliases": ["octopus"],
+            "amount": 1,
+            "price": 2700
+        },
+        {
+            "name": "Shark",
+            "type": "big",
+            "aliases": ["shark"],
+            "amount": 1,
+            "price": 7500
+        },
+        {
+            "name": "Dolphin",
+            "type": "big",
+            "aliases": ["dolphin"],
+            "amount": 1,
+            "price": 8000
+        },
+        {
+            "name": "Crocodile",
+            "type": "big",
+            "aliases": ["crocodile", "croc", "alligator"],
+            "amount": 1,
+            "price": 9900
+        },
+        {
+            "name": "Great Shark" ,
+            "type": "legendary" ,
+            "aliases": [
+                "great shark"
+            ] ,
+            "amount": 1,
+            "price": 25000
+        },
+        {
+            "name": "Whale" ,
+            "type": "legendary" ,
+            "aliases": [
+                "whale"
+            ] ,
+            "amount": 1,
+            "price": 26000
+        },
+        {
+            "name": "Giant Octopus" ,
+            "type": "legendary" ,
+            "aliases": [
+                "giant octopus"
+            ] ,
+            "amount": 1,
+            "price": 19000
+        },
+        {
+            "name": "Giant Squid" ,
+            "type": "legendary" ,
+            "aliases": [
+                "giant squid"
+            ] ,
+            "amount": 1,
+            "price": 18000
+        },
+        {
+            "name": "Colossal Jelly Fish" ,
+            "type": "legendary" ,
+            "aliases": [
+                "colossal jelly fish"
+            ],
+            "amount": 1,
+            "price": 25000
+        }
+    ]
+}

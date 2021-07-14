@@ -188,7 +188,10 @@ class Economy(commands.Cog, name="economy"):
             if not amount or amount == 0:
                 return await ctx.message.reply("The amount of item you mentioned is wrong, peko!")
             item_name = " ".join(arguments[2:])
-            item_code = find(item_pool, "name", item_name)
+            fishes_pool = json.load(open("assets/fishes_poll.json"))['items']
+            item_pool.extend(fishes_pool)
+            item_code = find(item_pool,
+                             "name", item_name)
             if item_code == -1:
                 return await ctx.message.reply("The item doesn't exist peko!")
             price = item_pool[item_code]['price']
@@ -202,7 +205,7 @@ class Economy(commands.Cog, name="economy"):
                 else:
                     await ctx.send(f"You don't have enough {self.unit}, peko!")
             elif subcommand == "sell":
-                sell_price = int(price * (33 / 100))
+                sell_price = int(price * (33 / 100)) if "type" not in item_pool[item_code] else price
                 available_amount = user.getAmountOfItem(item_name=item_name)
                 if available_amount == 0:
                     await ctx.send(f"You don't have this item, peko!")

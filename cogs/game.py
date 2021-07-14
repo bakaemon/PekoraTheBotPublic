@@ -10,6 +10,7 @@ from helpers.finder import find
 from helpers.getMemberID import getMemberID
 from helpers.pekofy import pekofy
 from helpers.extractstring import extract_string
+from helpers.randomchance import probably
 from helpers.replied_reference import replied_reference
 from helpers.bank_methods import Bank
 from discord.ext import commands
@@ -219,7 +220,31 @@ class Game(commands.Cog, name="game"):
         except ValueError:
             return await ctx.send(f"The game {type_of_game} is not existed, peko.")
         await ctx.invoke(the_game, money, guess)
+    
+    @commands.command(name="fish", help="Let's take a break and do fishing for a while.")
+    @commands.cooldown(1, 45, commands.BucketType.user)
+    async def fish(self, ctx):
+        user = Bank(ctx.message.author.id)
+        fish_pool = json.load(open("assets/fishes_poll.json"))['items']
 
+        def getTypeOfFish(type_fish: str):
+            return list(filter(lambda fish: fish['type'] == type_fish, fish_pool))
+
+        commons = getTypeOfFish("common")
+        rare = getTypeOfFish("rare")
+        exotic = getTypeOfFish("exotic")
+        big = getTypeOfFish("big")
+        legendary = getTypeOfFish("legendary")
+        msg_txt = "You cast your pole and "
+        catch = random.choice(commons) if probably(60/100) else random.choice(rare) if probably(20/100) \
+            else random.choice(exotic) if probably(8/100) else random.choice(big) if probably(4/100) \
+            else random.choice(legendary) if probably(2/100) else None
+        if catch is None:
+            msg_txt += "you got nothing!"
+        else:
+            user.addItem(catch)
+            msg_txt += f"you caught one {catch['name']}"
+        await ctx.send(msg_txt)
 
 def setup(bot):
     bot.add_cog(Game(bot))
