@@ -243,7 +243,7 @@ class Game(commands.Cog, name="game"):
             msg_txt += "you got nothing!"
         else:
             user.addItem(catch)
-            msg_txt += f"you caught one {catch['name']}"
+            msg_txt += f"you caught one __**{catch['name']}**__"
         await ctx.send(msg_txt)
 
 def setup(bot):
