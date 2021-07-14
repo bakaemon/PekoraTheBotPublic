@@ -7,6 +7,7 @@ import requests
 import discord
 
 from helpers.finder import find
+from helpers.getMemberID import getMemberID
 from helpers.pekofy import pekofy
 from helpers.extractstring import extract_string
 from helpers.replied_reference import replied_reference
@@ -32,7 +33,7 @@ class Game(commands.Cog, name="game"):
     async def challenge(self, ctx, people, *quiz_type):
         type_str = " ".join(list(quiz_type))
         available_types = ['yes or no question', 'multiple choices question']
-        member_id = int(extract_string(people, s="!", e=">")) if (people[0] == "<" and people[-1:] == ">") else 0
+        member_id = getMemberID(people)
         if people is None:
             return await ctx.message.reply("Please specify who will take the challenge, peko!")
         elif people == "me" or member_id == ctx.message.author.id:

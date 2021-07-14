@@ -5,6 +5,8 @@ import random
 import sys
 import requests
 import discord
+
+from helpers.getMemberID import getMemberID
 from helpers.pekofy import pekofy
 from helpers.extractstring import extract_string
 from helpers.replied_reference import replied_reference
@@ -97,7 +99,7 @@ class Fun(commands.Cog, name="fun"):
         res_txt = res_txt[:-2]
         url_image = res_txt
         if members is not None:
-            member_id = int(extract_string(members, s="!", e=">"))
+            member_id = getMemberID(members)
             if member_id == ctx.message.author.id:
                 return await ctx.send(pekofy("Why are you hurting yourself?"))
             elif member_id == self.bot.user.id:
