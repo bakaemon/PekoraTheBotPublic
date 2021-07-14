@@ -41,7 +41,7 @@ class Economy(commands.Cog, name="economy"):
         embed.add_field(name="Wallet", value=f"Total: {user.getWallet()}{self.unit}", inline=False)
         embed.add_field(name="Balance", value=f"Total: {user.getBalance()}{self.unit}", inline=False)
         if len(user.getInventory()) > 0:
-            inv_text = " ".join([f"**{x['name']} x{x['amount']}**" for x in user.getInventory()])
+            inv_text = " ".join([f"**__{x['name']} x{x['amount']}__**" for x in user.getInventory()])
         else:
             inv_text = "Empty"
         embed.add_field(name="Inventory", value=inv_text, inline=False)
