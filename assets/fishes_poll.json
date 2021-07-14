@@ -1,103 +1,77 @@
 {
     "items": [
         {
-            "name": "Carp",
-            "type": "common",
-            "aliases": [
-                "carp"
-            ],
-            "amount": 1,
-            "price": 200
-        },
-        {
-            "name": "Eel",
-            "type": "common",
-            "aliases": ["eel"],
-            "amount": 1,
-            "price": 180
-        },
-        {
-            "name": "Cod",
-            "type": "common",
-            "aliases": ["cod"],
-            "amount": 1,
-            "price": 200
-        },
-        {
-            "name": "Salmon" ,
+            "name": "Crab" ,
             "type": "common" ,
             "aliases": [
-                "salmon"
+                "crab"
             ] ,
             "amount": 1,
             "price": 210
         },
         {
-            "name": "Flying fish",
-            "type": "rare",
-            "aliases": ["flying", "flying fish"],
+            "name": "Common fish" ,
+            "type": "common" ,
+            "aliases": [
+                "fish"
+            ] ,
             "amount": 1,
-            "price": 300
+            "price": 150
         },
         {
-            "name": "Mini shark",
-            "type": "rare",
-            "aliases": ["mini shark"],
+            "name": "Lobster",
+            "type": "common",
+            "aliases": ["lobster"],
             "amount": 1,
-            "price": 3000
+            "price": 270
         },
         {
-            "name": "Deepwater Man-fish",
-            "type": "rare",
-            "aliases": ["deepwater manfish", "manfish"],
+            "name": "Tropical fish" ,
+            "type": "rare" ,
+            "aliases": [
+                "tropical", "tropical fish"
+            ] ,
             "amount": 1,
-            "price": 1
+            "price": 500
         },
         {
-            "name": "squid",
+            "name": "Blowfish",
             "type": "rare",
+            "aliases": ["blowfish"],
+            "amount": 1,
+            "price": 2700
+        },
+        {
+            "name": "Shrimp",
+            "type": "common",
+            "aliases": ["shrimp"],
+            "amount": 1,
+            "price": 150
+        },
+        {
+            "name": "Squid",
+            "type": "exotic",
             "aliases": ["squid"],
             "amount": 1,
             "price": 1000
-        },
-        {
-            "name": "Glowing Squid",
-            "type": "exotic",
-            "aliases": ["glowing squid"],
-            "amount": 1,
-            "price": 1500
-        },
-        {
-            "name": "Piranha",
-            "type": "exotic",
-            "aliases": ["piranha"],
-            "amount": 1,
-            "price": 1200
-        },
-        {
-            "name": "Ghost Eel",
-            "type": "exotic",
-            "aliases": ["ghost eel"],
-            "amount": 1,
-            "price": 1500
-        },
-        {
-            "name": "Glowing Jelly Fish",
-            "type": "exotic",
-            "aliases": ["glowing jelly fish"],
-            "amount": 1,
-            "price": 1500
         },
         {
             "name": "Octopus",
             "type": "exotic",
             "aliases": ["octopus"],
             "amount": 1,
-            "price": 2700
+            "price": 1000
+        },
+        {
+            "name": "Turtle",
+            "type": "exotic",
+            "aliases": ["turtle"],
+            "amount": 1,
+            "price": 800
         },
         {
             "name": "Shark",
-            "type": "big",
+            "type": "legendary",
             "aliases": ["shark"],
             "amount": 1,
             "price": 7500
@@ -110,20 +84,18 @@
             "price": 8000
         },
         {
+            "name": "Seal",
+            "type": "big",
+            "aliases": ["octopus"],
+            "amount": 1,
+            "price": 2700
+        },
+        {
             "name": "Crocodile",
             "type": "big",
             "aliases": ["crocodile", "croc", "alligator"],
             "amount": 1,
             "price": 9900
-        },
-        {
-            "name": "Great Shark" ,
-            "type": "legendary" ,
-            "aliases": [
-                "great shark"
-            ] ,
-            "amount": 1,
-            "price": 25000
         },
         {
             "name": "Whale" ,
@@ -133,33 +105,6 @@
             ] ,
             "amount": 1,
             "price": 26000
-        },
-        {
-            "name": "Giant Octopus" ,
-            "type": "legendary" ,
-            "aliases": [
-                "giant octopus"
-            ] ,
-            "amount": 1,
-            "price": 19000
-        },
-        {
-            "name": "Giant Squid" ,
-            "type": "legendary" ,
-            "aliases": [
-                "giant squid"
-            ] ,
-            "amount": 1,
-            "price": 18000
-        },
-        {
-            "name": "Colossal Jelly Fish" ,
-            "type": "legendary" ,
-            "aliases": [
-                "colossal jelly fish"
-            ],
-            "amount": 1,
-            "price": 25000
         }
     ]
 }

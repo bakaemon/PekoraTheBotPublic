@@ -168,11 +168,11 @@ class Game(commands.Cog, name="game"):
             if user_num == system_number:
                 user.addMoney(money)
                 await msg.edit(content=f"The dice roll {system_number}.\n"
-                               f"Congratulations! You got {money}{unit}, peko!")
+                                       f"Congratulations! You got {money}{unit}, peko!")
             else:
                 user.deleteMoney(money)
                 await msg.edit(content=f"The dice roll {system_number}.\n"
-                               f"You lose {money}{unit}. Be lucky next time!")
+                                       f"You lose {money}{unit}. Be lucky next time!")
         else:
             await msg.delete()
             await ctx.send("Please specify the number you want to bet on, peko.")
@@ -191,7 +191,7 @@ class Game(commands.Cog, name="game"):
             if bet == system_result:
                 user.addMoney(money)
                 await msg.edit(content=f"🪙The coin roll to **_{system_result}_**.\n"
-                               f"Congratulations! You got {money}{unit}, peko!")
+                                       f"Congratulations! You got {money}{unit}, peko!")
             else:
                 user.deleteMoney(money)
                 await msg.edit(content=f"🪙The coin roll to **_{system_result}_**.\nYou lose {money}{unit}"
@@ -220,31 +220,88 @@ class Game(commands.Cog, name="game"):
         except ValueError:
             return await ctx.send(f"The game {type_of_game} is not existed, peko.")
         await ctx.invoke(the_game, money, guess)
-    
+
     @commands.command(name="fish", help="Let's take a break and do fishing for a while.")
     @commands.cooldown(1, 45, commands.BucketType.user)
     async def fish(self, ctx):
         user = Bank(ctx.message.author.id)
+        if user.getAmountOfItem(item_name="Fishing pole") == 0:
+            return await ctx.send("You need ``Fishing pole`` in order to do fishing, peko!")
         fish_pool = json.load(open("assets/fishes_poll.json"))['items']
 
         def getTypeOfFish(type_fish: str):
             return list(filter(lambda fish: fish['type'] == type_fish, fish_pool))
 
+        def check(msg):
+            return msg.author == ctx.author and msg.channel == ctx.channel \
+                   and isinstance(msg.content, str)
+
+        fish_icon = {
+            "Crab": "🦀",
+            "Lobster": "🦞",
+            "Shrimp": "🦐",
+            "Squid": "🦑",
+            "Octopus": "🐙",
+            "Whale": "🐋",
+            "Seal": "🦭",
+            "Dolphin": "🐬",
+            "Common fish": "🐟",
+            "Tropical fish": "🐠",
+            "Blowfish": "🐡",
+            "Shark": "🦈",
+            "Crocodile": "🐊",
+            "Turtle": "🐢"
+        }
+        broken_rate = 0.01
         commons = getTypeOfFish("common")
         rare = getTypeOfFish("rare")
         exotic = getTypeOfFish("exotic")
         big = getTypeOfFish("big")
         legendary = getTypeOfFish("legendary")
         msg_txt = "You cast your pole and "
-        catch = random.choice(commons) if probably(40/100) else random.choice(rare) if probably(20/100) \
-            else random.choice(exotic) if probably(8/100) else random.choice(big) if probably(4/100) \
-            else random.choice(legendary) if probably(2/100) else None
+        catch = random.choice(commons) if probably(40 / 100) else random.choice(rare) if probably(20 / 100) \
+            else random.choice(exotic) if probably(8 / 100) else random.choice(big) if probably(4 / 100) \
+            else random.choice(legendary) if probably(2 / 100) else None
         if catch is None:
             msg_txt += "you got nothing!"
-        else:
+        elif catch['type'] in ['common', 'rare']:
             user.addItem(catch)
-            msg_txt += f"you caught __**{catch['name']}**__"
+            msg_txt += f"you caught {fish_icon[catch['name']]}**__{catch['name']}__**, peko."
+        elif catch['type'] in ['exotic', 'big', 'legendary']:
+            if probably(50 / 100):
+                if catch['type'] == "legendary":
+                    random_prompts = ["please help me this one pekora",
+                                      "you shall not broke away fishy",
+                                      "you shall go with me let's goo",
+                                      "mama pick me up i'm scared",
+                                      "yee haw buruburuburu gotcha"
+                                      ]
+                else:
+                    random_prompts = ["heave ho i got you matey",
+                                      "carrots here stay with me",
+                                      "peko peko peko peko",
+                                      "almondo almondo gotcha you fish",
+                                      "buruburuburuburu",
+                                      "stop you violated the law"]
+                chosen_prompt = random.choice(random_prompts)
+                await ctx.send("You almost catch this one big fish!\n"
+                               f"Type `` {chosen_prompt} `` to catch it, you has 12 seconds peko!")
+
+                msg = await self.bot.wait_for("message", check=check, timeout=12)
+                if msg.content == chosen_prompt:
+                    user.addItem(catch)
+                    msg_txt += f"you caught {fish_icon[catch['name']]}**__{catch['name']}__**, peko."
+                else:
+                    msg_txt += "you failed to catch the fish."
+                    broken_rate = 10 / 100
+            else:
+                user.addItem(catch)
+                msg_txt += f"you caught __**{fish_icon[catch['name']]}**__{catch['name']}**__, peko."
+        if probably(broken_rate):
+            user.deleteItem(user.getItem(item_name="Fishing pole"))
+            msg_txt += "\nUnfortunately, your pole has broken, peko."
         await ctx.send(msg_txt)
+
 
 def setup(bot):
     bot.add_cog(Game(bot))

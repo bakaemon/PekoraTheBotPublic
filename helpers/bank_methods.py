@@ -82,12 +82,19 @@ class Bank:
                                  })
 
     def getAmountOfItem(self, item_name):
+        items = self.getItem(item_name=item_name)
+        if items is None:
+            return 0
+        else:
+            return items['amount']
+
+    def getItem(self, item_name):
         items = self._economy.find_one({"user_id": self.userID},
                                        {"inventory": {"$elemMatch": {"name": item_name}}})
         if "inventory" not in items:
-            return 0
+            return None
         else:
-            return items['inventory'][0]['amount']
+            return items['inventory'][0]
 
     def addItem(self, item: dict, amount=1):
         if self.getAmountOfItem(item['name']) == 0:
