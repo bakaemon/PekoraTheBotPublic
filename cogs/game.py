@@ -236,14 +236,14 @@ class Game(commands.Cog, name="game"):
         big = getTypeOfFish("big")
         legendary = getTypeOfFish("legendary")
         msg_txt = "You cast your pole and "
-        catch = random.choice(commons) if probably(60/100) else random.choice(rare) if probably(20/100) \
+        catch = random.choice(commons) if probably(40/100) else random.choice(rare) if probably(20/100) \
             else random.choice(exotic) if probably(8/100) else random.choice(big) if probably(4/100) \
             else random.choice(legendary) if probably(2/100) else None
         if catch is None:
             msg_txt += "you got nothing!"
         else:
             user.addItem(catch)
-            msg_txt += f"you caught one __**{catch['name']}**__"
+            msg_txt += f"you caught __**{catch['name']}**__"
         await ctx.send(msg_txt)
 
 def setup(bot):
