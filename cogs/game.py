@@ -34,16 +34,22 @@ class Game(commands.Cog, name="game"):
     async def challenge(self, ctx, people, *quiz_type):
         type_str = " ".join(list(quiz_type))
         available_types = ['yes or no question', 'multiple choices question']
-        member_id = getMemberID(people)
         if people is None:
+            self.challenge.reset_cooldown(ctx)
             return await ctx.message.reply("Please specify who will take the challenge, peko!")
-        elif people == "me" or member_id == ctx.message.author.id:
+        elif people == "me":
             member_object = ctx.message.author
         else:
-            member_object = ctx.message.guild.get_member(member_id)
+            member_id = getMemberID(people)
+            if member_id == ctx.message.author.id:
+                member_object = ctx.message.author
+            else:
+                member_object = ctx.message.guild.get_member(member_id)
         if member_object is None:
+            self.challenge.reset_cooldown(ctx)
             return await ctx.message.reply("Please specify correct person who will take the challenge, peko!")
         if type_str not in available_types or len(list(quiz_type)) == 0:
+            self.challenge.reset_cooldown(ctx)
             return await ctx.message.reply("Pekora can't recognise what challenge you are talking about, peko.")
         user = Bank(member_object.id)
         url = "https://opentdb.com/api.php?amount=1"
@@ -226,6 +232,7 @@ class Game(commands.Cog, name="game"):
     async def fish(self, ctx):
         user = Bank(ctx.message.author.id)
         if user.getAmountOfItem(item_name="Fishing pole") == 0:
+            self.fish.reset_cooldown(ctx)
             return await ctx.send("You need ``Fishing pole`` in order to do fishing, peko!")
         fish_pool = json.load(open("assets/fishes_poll.json"))['items']
 

@@ -115,7 +115,8 @@ async def on_command_completion(ctx):
 
 # The code in this event is executed every time a valid commands catches an error
 @bot.event
-async def on_command_error(context, error):
+async def on_command_error(ctx, error):
+    command = bot.get_command(str(ctx.command.qualified_name.split(" ")[0]))
     if isinstance(error, commands.CommandOnCooldown):
         minutes, seconds = divmod(error.retry_after, 60)
         hours, minutes = divmod(minutes, 60)
@@ -127,7 +128,7 @@ async def on_command_error(context, error):
                         f"{f'{round(seconds)} seconds' if round(seconds) > 0 else ''}, peko.",
             color=0xE02B2B
         )
-        await context.send(embed=embed)
+        await ctx.send(embed=embed)
     elif isinstance(error, commands.MissingPermissions):
         missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
         if len(missing) > 2:
@@ -139,22 +140,24 @@ async def on_command_error(context, error):
             description="You are missing the permission `" + fmt + "` to execute this command, peko!",
             color=0xE02B2B
         )
-        await context.send(embed=embed)
+        await ctx.send(embed=embed)
     elif isinstance(error, commands.MissingRequiredArgument):
+        command.reset_cooldown(ctx)
         embed = discord.Embed(
             title="PEKO!",
             description=str(error).capitalize(),
             # We need to capitalize because the command arguments have no capital letter in the code.
             color=0xE02B2B
         )
-        await context.send(embed=embed)
+        await ctx.send(embed=embed)
     elif isinstance(error, commands.CommandInvokeError):
+        command.reset_cooldown(ctx)
         embed = discord.Embed(
             title="PEKO!",
             description=str(error).capitalize(),
             color=0xE02B2B
         )
-        await context.send(embed=embed)
+        await ctx.send(embed=embed)
     raise error
 
 
