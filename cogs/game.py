@@ -303,7 +303,7 @@ class Game(commands.Cog, name="game"):
                     broken_rate = 10 / 100
             else:
                 user.addItem(catch)
-                msg_txt += f"you caught __**{fish_icon[catch['name']]}**__{catch['name']}**__, peko."
+                msg_txt += f"you caught __**{fish_icon[catch['name']]}**__{catch['name']}__**, peko."
         if probably(broken_rate):
             user.deleteItem(user.getItem(item_name="Fishing pole"))
             msg_txt += "\nUnfortunately, your pole has broken, peko."
