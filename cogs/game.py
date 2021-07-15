@@ -316,6 +316,7 @@ class Game(commands.Cog, name="game"):
         if user.getAmountOfItem("Smartphone") == 0:
             return await ctx.send("You must have a ``Smartphone`` in order to do gacha!")
         if user.getAmountOfItem("Fake coin") == 0:
+            self.gacha.reset_cooldown(ctx)
             return await ctx.send("You need 🪙**Fake coin** to proceed gacha!")
         user.deleteItem(user.getItem(item_name="Fake coin"))
         star = "🌟"
