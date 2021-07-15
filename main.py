@@ -118,14 +118,10 @@ async def on_command_completion(ctx):
 async def on_command_error(ctx, error):
     command = bot.get_command(str(ctx.command.qualified_name.split(" ")[0]))
     if isinstance(error, commands.CommandOnCooldown):
-        minutes, seconds = divmod(error.retry_after, 60)
-        hours, minutes = divmod(minutes, 60)
-        hours = hours % 24
+        formatted_time = time_format(seconds=error.retry_after)
         embed = discord.Embed(
             title="Slow down, peko!",
-            description=f"You can use this command again in {f'{round(hours)} hours' if round(hours) > 0 else ''} "
-                        f"{f'{round(minutes)} minutes' if round(minutes) > 0 else ''} "
-                        f"{f'{round(seconds)} seconds' if round(seconds) > 0 else ''}, peko.",
+            description=f"You can use this command again in {formatted_time}, peko.",
             color=0xE02B2B
         )
         await ctx.send(embed=embed)

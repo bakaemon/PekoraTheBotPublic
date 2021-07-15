@@ -309,6 +309,40 @@ class Game(commands.Cog, name="game"):
             msg_txt += "\nUnfortunately, your pole has broken, peko."
         await ctx.send(msg_txt)
 
+    @commands.command(name="gacha", help="Do the gacha and profit, peko!")
+    @commands.cooldown(rate=1, per=90, type=commands.BucketType.user)
+    async def gacha(self, ctx):
+        user = Bank(ctx.message.author.id)
+        if user.getAmountOfItem("Smartphone") == 0:
+            return await ctx.send("You must have a ``Smartphone`` in order to do gacha!")
+        star = "🌟"
+        msg = await ctx.send("Rolling the gacha~🎵, peko!")
+        await asyncio.sleep(2)
+        if probably(30/100):
+            prize = random.randint(100, 150)
+            user.addMoney(amount=prize)
+            await msg.edit(content=f"You tried your luck and rolled a 2 {star} and sold it for {prize} {unit}, peko!")
+        elif probably(15/100):
+            prize = random.randint(200, 500)
+            user.addMoney(amount=prize)
+            await msg.edit(content=f"You tried your luck and rolled a 3 {star} and sold it for {prize} {unit}, peko!")
+        elif probably(7/100):
+            prize = random.randint(600, 900)
+            user.addMoney(amount=prize)
+            await msg.edit(content=f"You tried your luck and rolled a 4 {star} and sold it for {prize} {unit}, peko!")
+        elif probably(2/100):
+            prize = random.randint(1000, 1500)
+            user.addMoney(amount=prize)
+            await msg.edit(content=f"You tried your luck and rolled a 5 {star} and sold it for {prize} {unit}, peko!")
+            if probably(20/100):
+                item_prize_pool = json.load(open("assets/ecoConfig.json"))['item']
+                item_prize = random.choice(item_prize_pool)
+                user.addItem(item_prize)
+                await ctx.send(f"Additionally, the buyer give you 1 {item_prize['name']} as a thank you gift for "
+                               f"selling the rare 5 {star}")
+        else:
+            await msg.edit(content=f"You tried your luck and rolled a 1 {star} and no one want to buy it, peko!")
+
 
 def setup(bot):
     bot.add_cog(Game(bot))

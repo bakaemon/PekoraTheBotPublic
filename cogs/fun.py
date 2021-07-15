@@ -126,6 +126,5 @@ class Fun(commands.Cog, name="fun"):
         else:
             await ctx.reply("Who is supposed to be hit, peko?")
 
-
 def setup(bot):
     bot.add_cog(Fun(bot))

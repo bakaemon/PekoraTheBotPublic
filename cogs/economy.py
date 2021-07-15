@@ -10,6 +10,7 @@ from helpers.bank_methods import Bank
 from helpers.fomattingnumber import human_format as format
 from helpers.finder import find
 from helpers.pagination import chunks
+from helpers.randomchance import probably
 
 if not os.path.isfile("config.json"):
     sys.exit("'config.json' not found! Please add it and try again.")
@@ -217,19 +218,50 @@ class Economy(commands.Cog, name="economy"):
                 else:
                     await ctx.send(f"You only have {available_amount} {item_name}, peko!")
 
-    @commands.command(name="buy", description="Buy item from shop, peko!")
+    @commands.command(name="buy", help="Buy item from shop, peko!")
     async def buy(self, ctx, amount, *item_name):
         name = list(item_name)
         query = ['buy', amount]
         query.extend(name)
         await ctx.invoke(self.bot.get_command('shop'), *query)
 
-    @commands.command(name="sell", description="Sell item to shop, peko!")
+    @commands.command(name="sell", help="Sell item to shop, peko!")
     async def sell(self, ctx, amount, *item_name):
         name = list(item_name)
         query = ['sell', amount]
         query.extend(name)
         await ctx.invoke(self.bot.get_command('shop'), *query)
+
+    @commands.command(name="beg", help="Although quite shameful, you can use this to get more carrots, peko!")
+    @commands.cooldown(1, 60, commands.BucketType.user)
+    async def beg(self, ctx):
+        user = begin(ctx)
+        fails = ["You sit at the street waiting but no one give you anything."]
+        successes_n = [f"Someone kindheartedly gave you %money% {self.unit}"]
+        successes_s = [f"A rich person passed by gave you a huge sum of %money% {self.unit} peko. Wow!"]
+        rob_chance = 0.01
+        if probably(40/100):
+            money = random.randint(10, 100)
+            user.addMoney(money)
+            txt = random.choice(successes_n).replace("%money%", str(money))
+        elif probably(20/100):
+            money = random.randint(100, 500)
+            user.addMoney(money)
+            txt = random.choice(successes_n).replace("%money%", str(money))
+        elif probably(10/100):
+            money = random.randint(501, 1000)
+            user.addMoney(money)
+            txt = random.choice(successes_s).replace("%money%", str(money))
+        elif probably(5/100):
+            money = random.randint(1000, 2000)
+            user.addMoney(money)
+            txt = random.choice(successes_s).replace("%money%", str(money))
+        else:
+            txt = random.choice(fails)
+        if probably(rob_chance):
+            user.deleteMoney(user.getWallet())
+            txt = f"A robber appeared and rob you all of your money you had! So unfortunately, peko."
+        await ctx.send(txt)
 
 
 def setup(bot):
