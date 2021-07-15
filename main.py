@@ -118,7 +118,7 @@ async def on_command_completion(ctx):
 async def on_command_error(ctx, error):
     command = bot.get_command(str(ctx.command.qualified_name.split(" ")[0]))
     if isinstance(error, commands.CommandOnCooldown):
-        formatted_time = time_format(seconds=error.retry_after)
+        formatted_time = time_format(seconds=int(error.retry_after))
         embed = discord.Embed(
             title="Slow down, peko!",
             description=f"You can use this command again in {formatted_time}, peko.",

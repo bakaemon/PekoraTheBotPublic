@@ -9,14 +9,14 @@ def time_format(seconds: int, format_string="%h%m%s"):
     second = int(parts[2])
 
     if hours != 0:
-        format_string = format_string.replace("%h", str(hours) + "hours ")
+        format_string = format_string.replace("%h", str(hours) + " hours ")
     else:
         format_string = format_string.replace("%h", "")
     if minutes != 0:
-        format_string = format_string.replace("%m", str(minutes) + "minutes ")
+        format_string = format_string.replace("%m", str(minutes) + " minutes ")
     else:
         format_string = format_string.replace("%m", "")
-    return format_string.replace("%s", str(second) + "seconds ")
+    return format_string.replace("%s", str(second) + " seconds ")
 
 
 def human_format(num):
