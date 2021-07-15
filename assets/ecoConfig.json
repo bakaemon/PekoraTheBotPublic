@@ -1,6 +1,12 @@
 {
   "items": [
     {
+      "name": "Shiny coin",
+      "description": "A good luck object for beginners.",
+      "amount": 1,
+      "price": 500
+    },
+    {
       "name": "Fake coin",
       "description": "It is used for gacha!",
       "amount": 1,
