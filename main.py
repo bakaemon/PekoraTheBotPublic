@@ -112,18 +112,30 @@ async def on_command_completion(ctx):
     print(f"Executed {executedCommand} command in {ctx.guild.name} (ID: {ctx.message.guild.id}) by "
           f"{ctx.message.author} (ID: {ctx.message.author.id})")
 
-
+def generateErrorEmbed(title: str, message: str):
+    return discord.Embed(
+            title=title,
+            description=message,
+            color=0xE02B2B
+        )
 # The code in this event is executed every time a valid commands catches an error
 @bot.event
 async def on_command_error(ctx, error):
     command = bot.get_command(str(ctx.command.qualified_name.split(" ")[0]))
     if isinstance(error, commands.CommandOnCooldown):
         formatted_time = time_format(seconds=int(error.retry_after))
-        embed = discord.Embed(
-            title="Slow down, peko!",
-            description=f"You can use this command again in {formatted_time}, peko.",
-            color=0xE02B2B
-        )
+        embed = generateErrorEmbed(title="Slow down, peko!", message=f"You can do the command again in "
+                                                                     f"**{formatted_time}**, peko")
+        if command.name == "daily":
+            embed = generateErrorEmbed(title="Slow down, peko!", message="You can only claim daily bonus once per day,"
+                                                                         f" please try again after **{formatted_time}**"
+                                                                         f", peko.")
+        elif command.name == "fish":
+            embed = generateErrorEmbed(title="Slow down, peko!", message=f"The "
+                                                                         f"{random.choice(['pound', 'beach', 'lake'])}"
+                                                                         f" is still empty right now, please wait until "
+                                                                         f"those fish come back and try again after "
+                                                                         f"**{formatted_time}**, peko.")
         await ctx.send(embed=embed)
     elif isinstance(error, commands.MissingPermissions):
         missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]

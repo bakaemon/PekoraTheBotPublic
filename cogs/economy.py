@@ -263,6 +263,16 @@ class Economy(commands.Cog, name="economy"):
             txt = f"A robber appeared and rob you all of your money you had! So unfortunately, peko."
         await ctx.send(txt)
 
+    @commands.command(name="daily", help="Get daily rewards, peko!")
+    @commands.cooldown(1, 60 * 60 * 24, commands.BucketType.user)
+    async def daily(self, ctx):
+        user = begin(ctx)
+        amount = 2500
+        user.addMoney(amount=amount)
+        embed = discord.Embed(title="Daily reward", description=f"You got {amount}{unit} as daily reward, peko!")
+        await ctx.send(embed=embed)
+
+
 
 def setup(bot):
     bot.add_cog(Economy(bot))
