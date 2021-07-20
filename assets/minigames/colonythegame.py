@@ -34,6 +34,8 @@ class ColonyGame:
             # ship database
             self.science = 100
             self.culture = 100
+            # colonists
+            self.colonists = 1000
 
     def generatePlanets(self):
         planet = self.Planet()

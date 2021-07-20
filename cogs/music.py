@@ -388,6 +388,7 @@ class Music(commands.Cog, name="music"):
         voter = ctx.message.author
         if voter == ctx.voice_state.current.requester:
             await ctx.message.add_reaction('⏭')
+            ctx.voice_state.current = None
             ctx.voice_state.skip()
 
         elif voter.id not in ctx.voice_state.skip_votes:
@@ -396,6 +397,7 @@ class Music(commands.Cog, name="music"):
 
             if total_votes >= 3:
                 await ctx.message.add_reaction('⏭')
+                ctx.voice_state.current = None
                 ctx.voice_state.skip()
             else:
                 await ctx.send('Skip vote added, currently at **{}/3**, peko'.format(total_votes))
