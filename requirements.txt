@@ -14,3 +14,8 @@ chardet~=4.0.0
 urllib3~=1.26.6
 setuptools~=49.2.1
 pymongo[tls,srv]~=3.11.4
+six~=1.16.0
+future~=0.18.2
+Js2Py~=0.71
+youtube-dl
+ffmpeg
