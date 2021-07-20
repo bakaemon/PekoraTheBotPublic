@@ -19,3 +19,4 @@ future~=0.18.2
 Js2Py~=0.71
 youtube-dl
 ffmpeg
+PyNaCl
