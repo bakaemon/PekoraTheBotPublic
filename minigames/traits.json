@@ -1,0 +1,60 @@
+{
+  "positive": [
+    {
+      "name": "Airtight caves",
+      "text": "The planet has cave systems that allow air insulation that is beneficial for underground colony development."
+    },
+    {
+      "name": "Edible Flora",
+      "text": "The probe analyses that the planet's present flora can provide nutrients for colonists' survival."
+    },
+    {
+      "name": "Useful Fauna",
+      "text": "It is observed that the animal life on this planet can be domesticated or provide symbiotic relationship with human."
+    },
+    {
+      "name": "High-tech Alien ruins",
+      "text": "The probe found out several alien ruins that scattered around the planet contain bizarre alien technologies."
+    },
+    {
+      "name": "Beautiful Landscape",
+      "text": "The probe sent back many image data of landscape that is evaluated that beautiful based on human standard."
+    },
+    {
+      "name": "Beneficial Surface for Construction",
+      "text": "The planet's surface is proved to be beneficial for base construction."
+    }
+  ],
+  "neutral": [
+    {
+      "name": "Neutral Flora",
+      "text": "The planet's present flora is neither good or bad for colony's survival."
+    },
+    {
+      "name": "Fauna present",
+      "text": "The animal life found on this planet is neutral and provide no benefit for colony."
+    }
+  ],
+  "negative": [
+    {
+      "name": "Unstable Surface",
+      "text": "The planet geological is unstable and hard for spaceship to land."
+    },
+    {
+      "name": "Dangerous Flora",
+      "text": "The planet's flora is highly toxic and can be aggressively parasitic to other lifeforms."
+    },
+    {
+      "name": "Dangerous Fauna",
+      "text": "There are animals which pose huge threats to colonists survival."
+    },
+    {
+      "name": "Irregular extreme weathers",
+      "text": "The planet has climate anomalies that can cause weather with extreme heat, cold or even acid, toxic, irradiated rain."
+    },
+    {
+      "name": "Dangerous Alien ruins",
+      "text": "he probe found out several alien ruins that scattered around the planet contain major threats upon discovering."
+    }
+  ]
+}
